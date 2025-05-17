@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login - AudCheck</title>
+
+  <!-- Link para o Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Link para os ícones do FontAwesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      background: #fff8f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .login-container {
+      background: #ffffff;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(255, 140, 0, 0.3);
+      width: 350px;
+      text-align: center;
+      color: #333;
+    }
+
+    .login-container h1 {
+      color: #ff8c00; /* Laranja claro */
+      margin-bottom: 30px;
+      font-size: 32px;
+      font-weight: bold;
+    }
+
+    .input-field {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    .input-field label {
+      display: block;
+      font-size: 14px;
+      color: #555;
+      margin-bottom: 5px;
+    }
+
+    .input-field input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ffc107;
+      border-radius: 8px;
+      background-color: #fff7ee;
+      font-size: 14px;
+    }
+
+    .login-button {
+      background-color: #ff8c00;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+      width: 100%;
+    }
+
+    .login-button:hover {
+      background-color: #e67600;
+    }
+
+    .footer-text {
+      margin-top: 20px;
+      font-size: 12px;
+      color: #999;
+    }
+
+    .link-cadastro {
+      color: #ff8c00;
+      margin-top: 15px;
+      display: inline-block;
+      font-size: 14px;
+      text-decoration: none;
+    }
+
+    .link-cadastro:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="login-container">
+    <h1><i class="fas fa-sun"></i> AudCheck</h1>
+
+    <form action="processamento/processarLogin.php" method="POST">
+      <div class="input-field">
+        <label for="login">Usuário</label>
+        <input type="text" id="login" name="login" placeholder="Digite seu login" required>
+      </div>
+      <div class="input-field">
+        <label for="senha">Senha</label>
+        <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required>
+      </div>
+      <button type="submit" class="login-button">Entrar</button>
+    </form>
+
+    <a class="link-cadastro" href="view/cadastroUsuario.html"><i class="fas fa-user-plus"></i> Cadastrar Usuário</a>
+
+    <div class="footer-text">
+      © 2025 AudCheck. Todos os direitos reservados.
+    </div>
+  </div>
+
+  <!-- Script do Bootstrap -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
