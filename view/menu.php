@@ -143,7 +143,10 @@
         <i class="fas fa-building"></i> Cadastrar Empresa
       </a>
       <a href="cadastrarGerente.html" class="list-group-item list-group-item-action">
-        <i class="fas fa-building"></i> Cadastrar Gerentes
+        <i class="fa-solid fa-users"></i> Cadastrar Gerentes
+      </a>
+        <a href="cadastroUsuario.html" class="list-group-item list-group-item-action">
+        <i class="fa-solid fa-users"></i> Cadastrar Usuários
       </a>
       <a href="configuracao.html" class="list-group-item list-group-item-action">
         <i class="fas fa-user-shield"></i> Configuração

@@ -3,9 +3,9 @@
 
 $nomebanco = 'SYSTEM_NCONF';
 $usuario = 'bernardo';
-$host = 'localhost';
-$senha = '268179987';
-$porta = '';
+$host = '152.67.44.205';
+$senha = '';
+$porta = '3306';
 
 try
 {
