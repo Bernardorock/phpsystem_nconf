@@ -68,7 +68,7 @@
             echo '<i class="bi bi-person-circle"></i> Usuário: ' . htmlspecialchars($_SESSION['usuario']);
             ?>
         </h5>
-
+                <a href="menu.php" class="btn btn-primary">Menu</a>
                 <a href="alterarPl.php" class="btn btn-primary">Alterar</a>
  
 
@@ -106,6 +106,7 @@
                 INNER JOIN auditor a ON a.idauditor = p.id_auditor
                 INNER JOIN empresa e ON e.idempresa = p.id_empresa
                 where (p.dtenviopl is null or p.dtrecebidopl is null)
+                and ncativo = "s"
                 '
             );
             foreach($listar as $valorLista) {

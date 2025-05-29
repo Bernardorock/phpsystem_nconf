@@ -103,7 +103,12 @@
       <select id="auditor" name="auditor">
         <option>-- Selecione --</option>
         <?php
-         
+          $listaarAuditor = $conect->prepare('select nomeauditor from auditor');
+          $listaarAuditor->execute();
+          foreach($listaarAuditor as $valorAuditor)
+          {
+            print_r('<option>'. htmlspecialchars($valorAuditor[0]).'</option>');
+          }
         ?>
       </select>
     </div>

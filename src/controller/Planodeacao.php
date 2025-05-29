@@ -47,13 +47,14 @@
             $dt_inicio,
             $dt_fim,
             $dtenvi = null,
-            $dtrecebidopl = null
+            $dtrecebidopl = null,
+            $ncAtivo
         )
         {
             $inserir = $this->conectarClasse->prepare
             ('
-                insert into planodeacao (id_usuario, id_auditor, id_empresa, dtinicio, dtfim, dtenviopl, dtrecebidopl)
-                values (:id_usuario, :id_auditorprim, :id_empresa, :dt_inicio, :dfim, :dtenvio, :dtrecebido)
+                insert into planodeacao (id_usuario, id_auditor, id_empresa, dtinicio, dtfim, dtenviopl, dtrecebidopl, ncativo)
+                values (:id_usuario, :id_auditorprim, :id_empresa, :dt_inicio, :dfim, :dtenvio, :dtrecebido, :ncativo)
             ');
             $inserir->bindParam(':id_usuario', $id_usuario);
             $inserir->bindParam(':id_auditorprim', $id_auditorPri);
@@ -62,9 +63,22 @@
             $inserir->bindParam(':dfim', $dt_fim);
             $inserir->bindParam(':dtenvio', $dtenvi);
             $inserir->bindParam(':dtrecebido', $dtrecebidopl);
+            $inserir->bindParam(':ncativo', $ncAtivo);
             $inserir->execute();
             //echo 'OK PLANO';
 
+        }
+        public function desativarPlano($idpre)
+        {
+            $desativar = $this->conectarClasse->prepare(
+                '
+                    update planodeacao
+                    set ncativo = "n"
+                    where idplano = :idpre
+                '
+            );
+            $desativar->bindParam(':idpre', $idpre);
+            $desativar->execute();
         }
     }
 

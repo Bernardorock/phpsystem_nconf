@@ -1,5 +1,6 @@
 <?php
 namespace App\controller;
+use PDO;
 
 class Anconf
 {
@@ -12,15 +13,17 @@ class Anconf
         $this->conectarClasse = $conect;
     }
 
-    public function InserirAnConf($idpl,$idnc,$nome)
-    {
+    public function InserirAnConf($idpl,$idnc,$nome, $vlrcobrado)
+    {   $ncAtivo = 's';
         $inserirAn = $this->conectarClasse->prepare(
-            '   insert into an_cadastrarinconf (idpre, idplano, nomeconf)
-                values (:idpl, :idno, :nome)
+            '   insert into an_cadastrarinconf (idpre, idplano, nomeconf, vlrcobrado, ncativo)
+                values (:idpl, :idno, :nome, :vlr, :ncativo)
             ');
         $inserirAn->bindParam(':idpl', $idpl);
         $inserirAn->bindParam(':idno', $idnc);
         $inserirAn->bindParam(':nome', $nome);
+        $inserirAn->bindParam(':vlr', $vlrcobrado);
+        $inserirAn->bindParam(':ncativo',$ncAtivo);
         $inserirAn->execute();
         
     }
@@ -29,13 +32,18 @@ class Anconf
     {   
        
             $listarValores = $this->conectarClasse->prepare('
-                select * from an_cadastrarinconf where idpre = :idpre
+                select nomeconf, vlrcobrado from an_cadastrarinconf where idpre = :idpre
 
             ');
             $listarValores->bindParam(':idpre', $idpre);
             $listarValores->execute();
-            foreach($listarValores as $valor)
-                echo $valor[3] . '<br>';
+            foreach($listarValores as $valor){
+                echo $valor[0] . " // " . $valor[1];
+                echo '<br>';
+            }
+                
+                
+
        
     }
 

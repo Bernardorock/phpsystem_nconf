@@ -12,5 +12,7 @@
             "name": "Bernardo"
         }
     ],
-    "require": {}
+    "require": {
+        "dompdf/dompdf": "^3.1"
+    }
 }

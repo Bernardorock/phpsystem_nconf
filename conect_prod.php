@@ -4,7 +4,7 @@
 $nomebanco = 'SYSTEM_NCONF';
 $usuario = 'bernardo';
 $host = '152.67.44.205';
-$senha = '';
+$senha = '268179987';
 $porta = '3306';
 
 try

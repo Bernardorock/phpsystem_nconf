@@ -67,7 +67,7 @@
              
             <br><br>
              <form action="../processamento/processarPlanoInconf.php" method="POST" class="form-container row g-3 align-items-end">
-            <h10>Cadastrar Auditoria:</h10>
+            <h3>Cadastrar Auditoria:</h3>
     
             <div class="col-md-3">
                 <label for="id" class="form-label">Data Inicial</label>
@@ -79,7 +79,7 @@
             </div>
             <div class="col-md-3">
             <label for="Auditor Primário">Auditor Primário:</label>
-                <select name="auditorprimario">
+                <select name="auditorprimario" required>
                     <option></option>
                     <?php
                         session_start();
@@ -128,7 +128,7 @@
             </div>
             <div class="col-md-3">
             <label for="gerente">Gerente:</label>
-                <select name="gerente">
+                <select name="gerente" required>
                     <option></option>
                     <?php
                         session_start();
@@ -142,7 +142,7 @@
             </div>
             <div class="col-md-3">
             <label for="empresa">Empresa:</label>
-                <select name="nomeempresa">
+                <select name="nomeempresa" required>
                     <option></option>
                     <?php
                         session_start();

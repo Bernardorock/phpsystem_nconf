@@ -56,6 +56,7 @@
             session_start();
             echo '<i class="bi bi-person-circle"></i> Usuário: ' . htmlspecialchars($_SESSION['usuario']);
             ?>
+            <a href="menu.php" class="btn btn-primary">Menu</a>
             <br><br>
 
         <form action="../processamento/processarFollowup.php" method="POST" class="form-container row g-3 align-items-end">

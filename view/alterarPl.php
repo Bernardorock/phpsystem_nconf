@@ -55,7 +55,9 @@
         <?php 
             session_start();
             echo '<i class="bi bi-person-circle"></i> Usuário: ' . htmlspecialchars($_SESSION['usuario']);
+            
             ?>
+            <a href="menu.php" class="btn btn-primary">Menu</a>
             <br><br>
 
         <form action="../processamento/processarAlteracaoPl.php" method="POST" class="form-container row g-3 align-items-end">
@@ -111,6 +113,7 @@
                         INNER JOIN auditor a ON a.idauditor = p.id_auditor
                         INNER JOIN empresa e ON e.idempresa = p.id_empresa
                         WHERE (p.dtenviopl IS NULL OR p.dtrecebidopl IS NULL)
+                        and p.ncativo = "s"
                         '
                     );
                     foreach($listar as $valorLista) {

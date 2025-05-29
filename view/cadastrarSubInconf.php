@@ -18,16 +18,17 @@
 
                     $numeroInconforme = $_POST['numeronc'] ?? '';
                     $nomeInconformidade = $_POST['inconformidades'] ?? '';
+                    $cobrarNota = $_POST['cobrarnota'] ?? '';
                     
                     
 
-                    if (!empty($numeroInconforme) && !empty($nomeInconformidade)) 
+                    if (!empty($numeroInconforme) && !empty($nomeInconformidade) && !empty($cobrarNota)) 
                     {
                         $_SESSION['idpre'] = $numeroInconforme;
                         // classe que verifica se existe id pendente
                         $inserirAnConf->veriricarId($_SESSION['idpre']);
                        
-                        $inserirAnConf->InserirAnConf($numeroInconforme, $numeroInconforme, $nomeInconformidade);
+                        $inserirAnConf->InserirAnConf($numeroInconforme, $numeroInconforme, $nomeInconformidade, $cobrarNota);
                         header('Location: ' . $_SERVER['PHP_SELF']);
                         exit;
                            
@@ -83,13 +84,13 @@
             border-bottom: 1px solid #ddd;
         }
 
-        th {
-            background-color:rgb(1, 6, 10);
+        .conteiner_head th {
+            background-color:ffa500;
             color: white;
         }
 
         tr:nth-child(even) {
-            background-color:rgb(17, 1, 1);
+            background-color:rgb(235, 221, 221);
         }
 
         form {
@@ -137,6 +138,10 @@
             margin-top: 10px;
             border-left: 4px solid #3498db;
         }
+        .form-check {
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
     </style>
 </head>
 <body>
@@ -147,15 +152,18 @@
     <a href="lancarNaoConformidades.php">
         <button type="button" class="btn btn-outline-primary">Ñ.Conformes</button>
     </a> 
+    <a href="alterarLancamentoPre.php">
+        <button type="button" class="btn btn-outline-primary">Alterar</button>
+    </a> 
     <a href="/../index.html">
         <button type="button" class="btn btn-outline-danger">Sair</button>
     </a>
     <table>
         <caption>Pendentes de Lançamentos N.C</caption>
-        <thead>
+        <thead class="conteiner_head">
             <tr>
                 <th>Nº PL</th>
-                <th>Nº N.C</th>
+                <th>Nº AUDITORIA</th>
                 <th>Dt Inicial</th>
                 <th>Dt Final</th>
                 <th>Auditor 1</th>
@@ -165,7 +173,7 @@
                 <th>Gerente</th>
             </tr>
         </thead>
-        <tbody>
+    <tbody class="conteiner_body">
             <?php
                 include '../conect.php';
                 //echo 'Usuário: '. $_SESSION['usuario'];
@@ -188,7 +196,7 @@
                     INNER JOIN empresa emp ON emp.idempresa = empg.id_empresa
                     INNER JOIN gerente ger ON ger.idgerente = empg.id_gerente
                     INNER JOIN planodeacao pl ON pl.idplano = pre.idplano
-                    WHERE pre.pendente = 's'
+                    WHERE pre.pendente = 's' and audativa = 's'
                 ");
 
                 foreach($listaPendenteNc as $row) {
@@ -212,29 +220,43 @@
         </tbody>
     </table>
 
-    <h3>Lançamento de N.C</h3>
+    <h3>Lançamento das Não Conformidades</h3>
     <form action="" method="POST">
-        <label for="numeronc">Nº N.C:</label>
-        <input type="number" name="numeronc" required placeholder="Número N.C">
+        <label for="numeronc">Nº Auditoria</label>
+        <input type="number" name="numeronc" required placeholder="Número da Auditoria">
             
         <label for="inconformidades">Não Conformes:</label>
         <select name="inconformidades">
             <option></option>
             <?php
-                $listaInconf = $conect->query('SELECT  CONCAT(ref, " - ", nomeincof, " - ", valor) as descricao FROM inconf');
+                $listaInconf = $conect->query('SELECT  conc as descricao FROM inconf');
                 foreach($listaInconf as $item) {
                     echo "<option>" . htmlspecialchars($item['descricao']) . "</option>";
                 }
 
             ?>
         </select>
+                <label for="cobrarnota">Destinar Nota</label>
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="cobrarnota" id="cobrarnotaSim" value="s">
+        <label class="form-check-label" for="cobrarnotaSim">
+            Sim
+        </label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="cobrarnota" id="cobrarnotaNao" value="n">
+        <label class="form-check-label" for="cobrarnotaNao">
+            Não
+        </label>
+    </div>
+        <br><br>
         <button type="submit" name="acao" value="cadastrar">Cadastrar</button>
         
     </form>
   
     
 
-    <h3>Ref - Descrição - Valor:</h3>
+    <h3>Ref - Descrição - Nota - Aplicar:</h3>
     <div class="dados-inconf">
        
         <?php

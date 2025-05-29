@@ -47,8 +47,8 @@ class Relatorioauditoria
     echo '<li><strong>AUDITOR PRINCIPAL:</strong> ' . $listaDatas[2] . '</li>';
     echo '<li><strong>AUDITOR SECUNDÁRIO:</strong> ' . $listaDatas[3] . '</li>';
     echo '<li><strong>AUDITOR TERCIÁRIO:</strong> ' . $listaDatas[4] . '</li>';
-    echo '<li><strong>GERENTE:</strong> ' . $listaDatas[5] . '</li>';
-    echo '<li><strong>LOJA:</strong> ' . $listaDatas[6] . '</li>';
+    echo '<li><strong>GERENTE:</strong> ' . $listaDatas[6] . '</li>';
+    echo '<li><strong>LOJA:</strong> ' . $listaDatas[5] . '</li>';
     echo '<li><strong>DIAS EM AUDITORIA:</strong> ' . $listaDatas[7] . '</li>';
     echo '</ul><hr>';
         

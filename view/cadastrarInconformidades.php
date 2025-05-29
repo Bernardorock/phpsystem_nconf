@@ -153,6 +153,7 @@
         </div>
         
         <button type="submit" class="button">Cadastrar</button>
+        <a href="menu.php">Menu</a>
       </form>
     </div>
 

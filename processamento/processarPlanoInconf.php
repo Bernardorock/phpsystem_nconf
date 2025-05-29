@@ -15,8 +15,10 @@
     $nomeAudSec = $_POST['auditorsecundario'] ?? '';
     $nomeAudTerc = $_POST['auditorternario'] ?? '';
     $pendetePre = 's';
+    $ativarAud = 's';
     $dataEnvio = null;
     $dataRecebido = null;
+    $ncAtivo = 's';
 
 
     //chaves estrangeiras: usuario/
@@ -97,7 +99,8 @@ if($dataInicio > $dataFim){
                                             $dataInicio,
                                             $dataFim,
                                             $dataEnvio,
-                                            $dataRecebido
+                                            $dataRecebido,
+                                            $ncAtivo
                                         );
         }
     
@@ -123,7 +126,8 @@ $inserirfPrenaoconformidades->inserirPreNaoConf(
     $capturarChaveAudTerc[0],
     $pendetePre,
     $captarChavePlano[0],
-    $capturarIdLigacao[0]
+    $capturarIdLigacao[0],
+    $ativarAud
 );
 
 
