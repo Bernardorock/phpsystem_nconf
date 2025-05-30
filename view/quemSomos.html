@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quem Somos - AudCheck</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to bottom, #fff7e6, #fff1d6);
+      color: #333;
+      line-height: 1.6;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: auto;
+      background-color: #ffffff;
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .quote {
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: #FF8C00;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .logo {
+      display: block;
+      max-width: 180px;
+      margin: 0 auto 30px;
+    }
+
+    p {
+      text-align: justify;
+      margin-bottom: 20px;
+    }
+
+    .footer-quote {
+      font-style: italic;
+      font-weight: 500;
+      text-align: center;
+      margin-top: 40px;
+      color: #FF8C00;
+      font-size: 1.2rem;
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+      margin-top: 60px;
+      font-size: 2rem;
+    }
+
+    .conteiner_equipe {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      margin-top: 40px;
+      padding: 0 10px;
+    }
+.conteiner_w {
+  background-color: #fff;
+  border: 8px solid #f3e2c7; /* cor da moldura */
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  width: calc(33.333% - 20px);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+}
+
+.conteiner_w:hover {
+  transform: scale(1.02);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+  
+.conteiner_w img {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  border: 6px solid #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 15px;
+}
+
+
+   
+
+    .conteiner_w span {
+      color: #e48512;
+      font-weight: 600;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    @media (max-width: 900px) {
+      .conteiner_w {
+        width: calc(50% - 20px);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 20px;
+      }
+
+      .quote {
+        font-size: 1.3rem;
+      }
+
+      .logo {
+        max-width: 140px;
+      }
+
+      .conteiner_w {
+        width: 100%;
+      }
+    }
+    .top-menu {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: #fff1d6;
+  border-bottom: 2px solid #f3e2c7;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 20px;
+  z-index: 1000;
+  font-weight: 600;
+}
+
+.top-menu button,
+.top-menu a {
+  background-color: #FF8C00;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  font-family: 'Poppins', sans-serif;
+  transition: background-color 0.3s;
+}
+
+.top-menu button:hover,
+.top-menu a:hover {
+  background-color: #e07a00;
+}
+
+body {
+  padding-top: 70px; /* compensar o menu fixo */
+}
+   </style>
+</head>
+<body>
+    <nav class="top-menu">
+  <button onclick="history.back()">⬅ Voltar</button>
+  <a href="#contato">📞 Entre em Contato</a>
+</nav>
+  <div class="container">
+    <div class="quote">“Auditoria não é sobre encontrar erros, é sobre revelar oportunidades!”</div>
+
+    <img src="../imagens/audcheck.png" alt="Logo AudCheck" class="logo">
+
+    <p>
+      Na <strong>AudCheck</strong>, somos especialistas em consultoria em auditoria, com foco em entregar segurança, clareza e confiabilidade para a tomada de decisões estratégicas.
+    </p>
+    <p>
+      Atuamos lado a lado com nossos clientes para identificar riscos, melhorar processos e garantir conformidade com normas e regulamentações. Mais do que encontrar falhas, nosso propósito é gerar valor através da transparência e da melhoria contínua.
+    </p>
+    <p>
+      Com uma equipe experiente e comprometida, unimos conhecimento técnico à realidade do seu negócio, oferecendo soluções sob medida, orientadas por dados, ética e responsabilidade.
+    </p>
+    <p>
+      Seja para auditorias internas, compliance ou revisão de processos, você pode contar com a AudCheck para ter uma visão clara e segura do seu cenário organizacional.
+    </p>
+
+    <div class="footer-quote">
+      “Na AudCheck, auditoria é mais do que controle — é confiança com propósito.”
+    </div>
+  </div>
+
+  <h2>Nossa Equipe</h2>
+<h2>Supervisão e Planejamento:</h2>
+<div class="conteiner_equipe">
+  <div class="conteiner_w">
+    <img src="../imagens/supervisort.jpeg" alt="Terlys Barros">
+    <p>
+      <span>Terlys Costa</span>
+      Supervisor de Auditoria com mais de 12 anos de experiência, lidera a equipe com foco em planejamento estratégico, organização de demandas e garantia de qualidade nos processos. Possui perfil analítico, excelente comunicação e atua como elo entre a diretoria e a equipe de campo.<br><br>
+      📞 (85) 9-9236-2587
+    </p>
+  </div>
+</div>
+  <h2>Auditores:</h2>
+
+  <div class="conteiner_equipe">
+    <div class="conteiner_w">
+      <img src="../imagens/pelnow.jpg" alt="Welligton Sales">
+      <p>
+        <span>Welligton Sales</span>
+        Auditor Pleno com 8 anos de empresa, vasta experiência em auditoria. 
+        Atua na conciliação de lojas, ajustes sistemáticos, análises profundas, 
+        inventários e ajustes críticos. Amante de um bom livro e tecnologias<br><br>
+        📞 (85) 9-9200-0252
+      </p>
+    </div>
+
+    <div class="conteiner_w">
+      <img src="../imagens/plenoj.jpg" alt="João Pedro">
+      <p>
+        <span>João Pedro</span>
+        Auditor Pleno responsável por análises internas e pensamento crítico. Está na empresa há mais de 4 anos, com experiência em auditorias de transportes e domínio de ferramentas administrativas
+        , se dedica à Área de Direito Penal.<br><br>
+        📞 (85) 9-9996-8121
+      </p>
+    </div>
+
+    <div class="conteiner_w">
+      <img src="../imagens/autitorL.jpg" alt="Lenice Cordeiro">
+      <p>
+        <span>Lenice Cordeiro</span>
+        Auditor(a) Júnior há 2 anos na empresa. Possui experiência com estoques de lojas, análises precisas e agilidade para lidar com divergências em auditorias externas. É apaixonada por Pedagogia e compliance.<br><br>
+        📞 (85) 9-9774-3435.
+      </p>
+    </div>
+  </div>
+  <div id="contato" style="text-align: left; margin-top: 60px;">
+    <h5><strong>Contato:</strong></h5>
+  <p>📧 Email: auditoria@solarmagazine.com.br</p>
+  <p>📱 WhatsApp: (85) 9-9236-2587</p>
+</div>
+</body>
+</html>
