@@ -48,4 +48,9 @@ class Posconf
         $listar->bindParam(':observacao', $observacao);
         $listar->execute();
     }
+
+    public function excluirPos($idpos)
+    {
+        
+    }
 }

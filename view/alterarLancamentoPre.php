@@ -206,7 +206,7 @@
 
         <button type="submit">Alterar</button>
         <a href="incluirPos.php">Inserir</a>
-        <a href="">Excluir</a>
+        <a href="excluirAuditoria.html">Excluir</a>
     </form>
 
     <h3>Não Conformidades Cadastradas</h3>

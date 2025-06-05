@@ -13,7 +13,7 @@ class Produto
         $this->conectarClasse = $conect;
     }
 
-    public function InserirProduto($ref, $descricao)
+    public function InserirProduto($ref, $descricao, $ean, $tipovolume)
     {
         //verificar a referência do produto junto ao ERP, se não cadastra.
         $listarProduto = $this->conectarClasse->prepare
@@ -25,12 +25,14 @@ class Produto
         if(!$captarRef){
             $inserir = $this->conectarClasse->prepare 
             (
-                'insert into produto (refsankhya, nomeproduto)
-                values (:ref, :descricao)
+                'insert into produto (refsankhya, nomeproduto, tipovolume, ean)
+                values (:ref, :descricao, :tipovolume, :ean)
                 '
             );
             $inserir->bindParam(':ref', $ref);
             $inserir->bindParam(':descricao', $descricao);
+            $inserir->bindParam(':tipovolume', $tipovolume);
+            $inserir->bindParam(':ean', $ean);
             $inserir->execute();
             echo 'CADASTRO REALIZADO';
         }else{
