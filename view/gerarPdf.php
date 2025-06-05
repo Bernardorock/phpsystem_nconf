@@ -199,7 +199,7 @@
     inc.nomeincof,
     inc.valor
     from pos_cadastroconf pos
-    inner join pre_nconformidade pre on pre.idpre = pos.idpre
+    inner join pre_nconformidade pre on pre.idpre = pos.idplano
     inner join empresagerente empre on empre.idempger = pre.idempgr
     inner join empresa emp on emp.idempresa = empre.id_empresa
     inner join gerente g on g.idgerente = empre.id_gerente
@@ -250,7 +250,7 @@
      inc.ref,
     inc.nomeincof
     from pos_cadastroconf pos
-    inner join pre_nconformidade pre on pre.idpre = pos.idpre
+    inner join pre_nconformidade pre on pre.idpre = pos.idplano
     inner join empresagerente empre on empre.idempger = pre.idempgr
     inner join empresa emp on emp.idempresa = empre.id_empresa
     inner join gerente g on g.idgerente = empre.id_gerente
@@ -270,7 +270,7 @@
   if ($listarBuscaSemDesconto->rowCount() > 0) {
     echo '
       <br><br>
-      <h5>NÃO CONFORMIDADES SEM DESCONTOS</h5>
+      <h5>NÃO CONFORMIDADES (SEM OBSERVAÇÕES)</h5>
       <table>
         <thead>
           <tr>
@@ -286,7 +286,7 @@
         <tr>
           <td>' . htmlspecialchars($resultadoSemDesconto['ref']) . '</td>
           <td>' . htmlspecialchars($resultadoSemDesconto['nomeincof']) . '</td>
-          <td>0.00</td>
+          <td>--</td>
           
         </tr>
       ';

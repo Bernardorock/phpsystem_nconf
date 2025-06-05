@@ -137,7 +137,7 @@
         <i class="fas fa-info-circle"></i> Cadastrar Setor
       </a>
       <a href="cadastrarinconformidades.php" class="list-group-item list-group-item-action">
-        <i class="fas fa-info-circle"></i> Cadastrar Inconformidades
+        <i class="fas fa-info-circle"></i> Cadastrar não conformidades
       </a>
       <a href="cadastroEmpresa.html" class="list-group-item list-group-item-action">
         <i class="fas fa-building"></i> Cadastrar Empresa
@@ -147,6 +147,9 @@
       </a>
         <a href="cadastroUsuario.html" class="list-group-item list-group-item-action">
         <i class="fa-solid fa-users"></i> Cadastrar Usuários
+      </a>
+        <a href="cadastrarProdutos.html" class="list-group-item list-group-item-action">
+        <i class="fa-solid fa-users"></i> Cadastrar Produtos
       </a>
       <a href="configuracao.html" class="list-group-item list-group-item-action">
         <i class="fas fa-user-shield"></i> Configuração

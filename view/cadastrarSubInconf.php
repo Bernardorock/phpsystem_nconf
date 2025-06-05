@@ -19,6 +19,7 @@
                     $numeroInconforme = $_POST['numeronc'] ?? '';
                     $nomeInconformidade = $_POST['inconformidades'] ?? '';
                     $cobrarNota = $_POST['cobrarnota'] ?? '';
+                    $obs = $_POST['informacao'] ?? '';
                     
                     
 
@@ -28,7 +29,7 @@
                         // classe que verifica se existe id pendente
                         $inserirAnConf->veriricarId($_SESSION['idpre']);
                        
-                        $inserirAnConf->InserirAnConf($numeroInconforme, $numeroInconforme, $nomeInconformidade, $cobrarNota);
+                        $inserirAnConf->InserirAnConf($numeroInconforme, $numeroInconforme, $nomeInconformidade, $cobrarNota, $obs);
                         header('Location: ' . $_SERVER['PHP_SELF']);
                         exit;
                            
@@ -223,7 +224,8 @@
     <h3>Lançamento das Não Conformidades</h3>
     <form action="" method="POST">
         <label for="numeronc">Nº Auditoria</label>
-        <input type="number" name="numeronc" required placeholder="Número da Auditoria">
+        <input type="number" name="numeronc" required 
+        value=<?= $_SESSION['idpre'] ?? ''?> placeholder="Número da Auditoria">
             
         <label for="inconformidades">Não Conformes:</label>
         <select name="inconformidades">
@@ -236,7 +238,7 @@
 
             ?>
         </select>
-                <label for="cobrarnota">Destinar Nota</label>
+                <label for="cobrarnota">Depende do Gerente?</label>
     <div class="form-check">
         <input class="form-check-input" type="radio" name="cobrarnota" id="cobrarnotaSim" value="s">
         <label class="form-check-label" for="cobrarnotaSim">
@@ -247,7 +249,9 @@
         <input class="form-check-input" type="radio" name="cobrarnota" id="cobrarnotaNao" value="n">
         <label class="form-check-label" for="cobrarnotaNao">
             Não
-        </label>
+        </label> <br>
+        <h5>Informações:</h5>
+        <textarea name="informacao" placeholder=""></textarea>
     </div>
         <br><br>
         <button type="submit" name="acao" value="cadastrar">Cadastrar</button>

@@ -2,8 +2,8 @@
 session_start();
 include '../conect.php';
 
-$loginUsuario = $_POST['login'];
-$loginSenha = $_POST['senha'];
+$loginUsuario = $_POST['login'] ?? '';
+$loginSenha = $_POST['senha'] ?? '';
 
 //verificação login e senha
 
@@ -31,7 +31,7 @@ try
     
 
 }catch(PDOException $e){
-    die ('Algo de errado não está certo '). $e->getMessage();
+    echo $e->getMessage();
 }
 
 

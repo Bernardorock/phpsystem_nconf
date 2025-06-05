@@ -228,7 +228,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['dtauditoria'], $_GET['n
      select
     pos.nomeconf
     from pos_cadastroconf pos
-    inner join pre_nconformidade pre on pre.idpre = pos.idpre
+    inner join pre_nconformidade pre on pre.idpre = pos.idplano
     inner join empresagerente empre on empre.idempger = pre.idempgr
     inner join empresa emp on emp.idempresa = empre.id_empresa
     inner join gerente g on g.idgerente = empre.id_gerente
@@ -271,7 +271,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['dtauditoria'], $_GET['n
      select
     pos.nomeconf
     from pos_cadastroconf pos
-    inner join pre_nconformidade pre on pre.idpre = pos.idpre
+    inner join pre_nconformidade pre on pre.idpre = pos.idplano
     inner join empresagerente empre on empre.idempger = pre.idempgr
     inner join empresa emp on emp.idempresa = empre.id_empresa
     inner join gerente g on g.idgerente = empre.id_gerente

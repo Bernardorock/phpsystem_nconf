@@ -1,3 +1,8 @@
+<?php
+    session_start();
+    include '../conect.php';
+    echo 'Usuário: ' . $_SESSION['usuario'];
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -34,17 +39,31 @@
 
         label {
             display: block;
-            margin-bottom: 8px;
+            margin-top: 10px;
+            margin-bottom: 5px;
         }
 
-        input[type="number"] {
+        input[type="number"], select, textarea {
             padding: 8px;
-            width: 250px;
+            width: 100%;
+            max-width: 400px;
             border: 1px solid #ccc;
             border-radius: 4px;
         }
 
-        button {
+        textarea {
+            height: 80px;
+        }
+
+        .form-check {
+            margin: 5px 0;
+        }
+
+        .form-check-input {
+            margin-right: 5px;
+        }
+
+        button , a{
             padding: 10px 15px;
             background-color: #FFA500;
             border: none;
@@ -63,6 +82,7 @@
             width: 100%;
             border-collapse: collapse;
             background-color: #fff;
+            margin-top: 20px;
         }
 
         th, td {
@@ -88,10 +108,11 @@
 <body>
     <h3>Área de alteração</h3>
     <a href="menu.php">⮌ Voltar ao Menu</a>
-    <form method="GET" action="/../processamento/processarInativarPre.php">
+
+    <form method="GET">
         <label for="idpre">Favor, inserir o número da auditoria:</label>
         <input type="number" name="idpre" id="idpre" placeholder="Número da Auditoria" required>
-        <button type="submit">Inativar</button>
+        <button type="submit">Buscar</button>
     </form>
 
     <h3>Lista de auditorias ativas:</h3>
@@ -111,8 +132,8 @@
         </thead>
         <tbody>
             <?php
-                include '../conect.php';
-                $listaPendenteNc = $conect->query("
+                $idPre = $_GET['idpre'] ?? '';
+                $listaPendenteNc = $conect->prepare("
                     SELECT 
                         pl.idplano,
                         pre.idpre,
@@ -131,10 +152,12 @@
                     INNER JOIN empresa emp ON emp.idempresa = empg.id_empresa
                     INNER JOIN gerente ger ON ger.idgerente = empg.id_gerente
                     INNER JOIN planodeacao pl ON pl.idplano = pre.idplano
-                    WHERE audativa = 's'
+                    WHERE audativa = 's' AND pre.idpre = :idpre
                 ");
+                $listaPendenteNc->bindParam(':idpre', $idPre);
+                $listaPendenteNc->execute();
 
-                foreach($listaPendenteNc as $row) {
+                foreach ($listaPendenteNc as $row) {
                     echo "<tr>
                             <td>{$row[0]}</td>
                             <td>{$row[1]}</td>
@@ -145,6 +168,77 @@
                             <td>{$row[6]}</td>
                             <td>{$row[7]}</td>
                             <td>{$row[8]}</td>
+                        </tr>";
+                }
+            ?>
+        </tbody>
+    </table>
+
+    <h3>Listagem Não Conformidades</h3>
+    <form method="POST" action="../processamento/alterarPos.php">
+        <label for="ocorrencia">Ocorrência:</label>
+        <input type="number" name="ocorrencia" id="ocorrencia" required>
+
+        <label for="inconformidades">Não Conformes:</label>
+        <select name="inconformidades" id="inconformidades">
+            <option value="">Selecione</option>
+            <?php
+                $listaInconf = $conect->query('SELECT conc AS descricao FROM inconf');
+                foreach($listaInconf as $item) {
+                    echo "<option>" . htmlspecialchars($item['descricao']) . "</option>";
+                }
+            ?>
+        </select>
+
+        <label>Depende do Gerente?</label>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="cobrarnota" id="cobrarnotaSim" value="s">
+            <label for="cobrarnotaSim">Sim</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="cobrarnota" id="cobrarnotaNao" value="n">
+            <label for="cobrarnotaNao">Não</label>
+        </div>
+
+        <label for="observacao">Observação:</label>
+        <textarea name="observacao" id="observacao"></textarea>
+        <?= $_SESSION['idpre'] = $_GET['idpre'] ?? '' ?>
+
+        <button type="submit">Alterar</button>
+        <a href="incluirPos.php">Inserir</a>
+        <a href="">Excluir</a>
+    </form>
+
+    <h3>Não Conformidades Cadastradas</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Ocorrência</th>
+                <th>Descrição</th>
+                <th>Depende do Gerente</th>
+                <th>Observação</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+                $listarPosConformidades = $conect->prepare("
+                    SELECT 
+                        idpos,
+                        nomeconf,
+                        vlrcobrado,
+                        observacao
+                    FROM pos_cadastroconf 
+                    WHERE idplano = :idpre AND ncativo = 's'
+                ");
+                $listarPosConformidades->bindParam(':idpre', $idPre);
+                $listarPosConformidades->execute();
+
+                foreach ($listarPosConformidades as $valor) {
+                    echo "<tr>
+                            <td>{$valor[0]}</td>
+                            <td>{$valor[1]}</td>
+                            <td>{$valor[2]}</td>
+                            <td>{$valor[3]}</td>
                         </tr>";
                 }
             ?>

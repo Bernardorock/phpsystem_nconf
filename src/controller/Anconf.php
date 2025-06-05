@@ -13,17 +13,18 @@ class Anconf
         $this->conectarClasse = $conect;
     }
 
-    public function InserirAnConf($idpl,$idnc,$nome, $vlrcobrado)
+    public function InserirAnConf($idpl,$idnc,$nome, $vlrcobrado, $obs)
     {   $ncAtivo = 's';
         $inserirAn = $this->conectarClasse->prepare(
-            '   insert into an_cadastrarinconf (idpre, idplano, nomeconf, vlrcobrado, ncativo)
-                values (:idpl, :idno, :nome, :vlr, :ncativo)
+            '   insert into an_cadastrarinconf (idpre, idplano, nomeconf, vlrcobrado, ncativo, observacao)
+                values (:idpl, :idno, :nome, :vlr, :ncativo, :observacao)
             ');
         $inserirAn->bindParam(':idpl', $idpl);
         $inserirAn->bindParam(':idno', $idnc);
         $inserirAn->bindParam(':nome', $nome);
         $inserirAn->bindParam(':vlr', $vlrcobrado);
         $inserirAn->bindParam(':ncativo',$ncAtivo);
+        $inserirAn->bindParam(':observacao', $obs);
         $inserirAn->execute();
         
     }

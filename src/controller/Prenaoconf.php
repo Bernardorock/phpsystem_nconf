@@ -44,7 +44,7 @@
             $inserirPre->execute();
             echo 'AUDITORIA CRIADA COM SUCESSO!';
         }
-        public function inativarPre($idrpe)
+        public function inativarPre($idrpe) // inativar por completa
         {   $audativa = 'n';
             $inativarAuditoria = $this->conectarClasse->prepare(
                 '
