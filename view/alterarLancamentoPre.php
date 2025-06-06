@@ -103,6 +103,19 @@
         tr:hover {
             background-color: #ffe0b3;
         }
+        .form-check {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    }
+
+    .form-check-input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin-right: 8px;
+    accent-color: #FFA500;
+    }
+
     </style>
 </head>
 <body>
@@ -187,7 +200,7 @@
                 foreach($listaInconf as $item) {
                     echo "<option>" . htmlspecialchars($item['descricao']) . "</option>";
                 }
-            ?>
+1            ?>
         </select>
 
         <label>Depende do Gerente?</label>
@@ -203,10 +216,16 @@
         <label for="observacao">Observação:</label>
         <textarea name="observacao" id="observacao"></textarea>
         <?= $_SESSION['idpre'] = $_GET['idpre'] ?? '' ?>
+        
+        <div class="form-check">
+             <input class="form-check-input" type="checkbox" id="desativarOcorrencia" name="desativar" value="1">
+             <label for="desativarOcorrencia">Desativar Ocorrência</label>
+        </div>
+
 
         <button type="submit">Alterar</button>
         <a href="incluirPos.php">Inserir</a>
-        <a href="excluirAuditoria.html">Excluir</a>
+        <a href="excluirAuditoria.php">Excluir</a>
     </form>
 
     <h3>Não Conformidades Cadastradas</h3>

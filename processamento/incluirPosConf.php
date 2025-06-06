@@ -5,6 +5,7 @@ require __DIR__ . '/../vendor/autoload.php';
 use App\controller\Posconf;
 $incluir = new Posconf();
 $audAtiva = 's';
+$_POST['numerodaauditoria'] = $_SESSION['idpre'];
 
 // verificar se numero da auditoria está ativa ou existe
 

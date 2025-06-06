@@ -12,6 +12,16 @@ $listar->bindParam(':ocorrencia', $_POST['ocorrencia']);
 $listar->execute();
 $capitar = $listar->fetch();
 
+//verificar se o desativar foi setado, se sim excluir ocorrencia
+switch(isset($_POST['desativar']))
+{
+    case "":
+        $_POST['desativar'] = 's';
+        break;
+    case true:
+        $_POST['desativar'] = 'n';
+}
+
 if(!isset($capitar[0]))
 {
     echo 'OCORRÊNICA NÃO CORRESPONDE AO NÚMERO DE AUDITORIA';
@@ -21,7 +31,8 @@ if(!isset($capitar[0]))
         $_POST['ocorrencia'],
         $_POST['inconformidades'],
         $_POST['cobrarnota'],
-        $_POST['observacao']
+        $_POST['observacao'],
+        $_POST['desativar']
         
         
     );

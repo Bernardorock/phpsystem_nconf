@@ -13,13 +13,13 @@ class Posconf
         $this->conectarClasse = $conect;
     }
 
-    public function atulizarPos($idpos, $descricao, $vlrcobrado, $observacao)
+    public function atulizarPos($idpos, $descricao, $vlrcobrado, $observacao, $ncativo)
     {
         $atualizar = $this->conectarClasse->prepare
         (
             '
                 update pos_cadastroconf
-                set nomeconf = :nomeconf, vlrcobrado = :vlrcobrado, observacao = :observacao
+                set nomeconf = :nomeconf, vlrcobrado = :vlrcobrado, observacao = :observacao, ncativo = :ncativo
                 where idpos = :idpos
             '
         );
@@ -27,6 +27,7 @@ class Posconf
         $atualizar->bindParam(':nomeconf',$descricao);
         $atualizar->bindParam(':vlrcobrado', $vlrcobrado);
         $atualizar->bindParam(':observacao', $observacao);
+        $atualizar->bindParam(':ncativo', $ncativo);
         $atualizar->execute();
         echo 'AUDITORIA ATUALIZADA';
     }
@@ -36,8 +37,9 @@ class Posconf
     public function inserirPos($idplano, $nomeconf, $vlrcobrado, $observacao)
     {   $ncAtivo = 's';
         $listar = $this->conectarClasse->prepare 
-        (
-            'insert into pos_cadastroconf (idplano, nomeconf, vlrcobrado, ncativo, observacao)
+        (    'insert into pos_cadastroconf 
+            (idplano, nomeconf, vlrcobrado, ncativo, observacao)
+
             values(:idplano, :nomeconf, :vlrcobrado, :ncativo, :observacao)
             '
         );
@@ -51,6 +53,6 @@ class Posconf
 
     public function excluirPos($idpos)
     {
-        
+
     }
 }

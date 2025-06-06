@@ -103,6 +103,7 @@
                 else
                 {
                     die('AUDITORIA NÃO ATIVA!!!');
+                
                 }
 
         }

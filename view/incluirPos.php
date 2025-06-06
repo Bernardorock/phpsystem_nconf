@@ -83,7 +83,7 @@ include '../conect.php';
 
     <form method="POST" action="/../processamento/incluirPosConf.php">
         <label for="numerodaauditoria">Número da Auditoria</label>
-        <input type="number" name="numerodaauditoria" id="numerodaauditoria" value="<?=  $_SESSION['idpre'] ?>" required>
+        <input type="number" name="numerodaauditoria" id="numerodaauditoria" value="<?=  $_SESSION['idpre'] ?>" disabled>
 
         <label for="inconformidades">Não Conformes:</label>
         <select name="inconformidades" id="inconformidades" required>
