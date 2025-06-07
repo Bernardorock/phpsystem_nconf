@@ -126,10 +126,15 @@
     </div>
 
     <h1 class="menu-title">Menu Eventos</h1>
-    <a href="lancarNaoConformidades.php" class="list-group-item list-group-item-action">
-        <i class="fa-regular fa-bell"></i> Lançamentos de Auditorias
-      </a>
+
+    
       <div class="list-group">
+        <a href="lancarNaoConformidades.php" class="list-group-item list-group-item-action">
+          <i class="fa-regular fa-bell"></i> Lançamentos de Auditorias
+        </a>
+        <a href="#" class="list-group-item list-group-item-action">
+          <i class="fa fa-file-text" aria-hidden="true"></i> Lançamentos de Divergências
+        </a>
         <a href="cadastrarPl.php" class="list-group-item list-group-item-action">
           <i class="fa-solid fa-a"></i> Plano de Ação
         </a>

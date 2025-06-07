@@ -1,332 +1,234 @@
 <?php
-    session_start();
-    require __DIR__ . '/../vendor/autoload.php';
-    use Dompdf\Dompdf;
-    include "../conect.php";
-    define('notaMaxima', 10.00);
-    $domPdf = new dompdf();
-    ob_start();
-  ?>
+require __DIR__ . '/../vendor/autoload.php';
+include '../conect.php';
+use Dompdf\Dompdf;
+define('notamaxima', 10.00);
+$pdf = new Dompdf();
+ob_start();
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Gerar PDF</title>
-  <link rel=”stylesheet” href=”https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.css“>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Inter', sans-serif;
-    }
+    <meta charset="UTF-8">
+    <title>Relatório CheckList</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            line-height: 1.6;
+        }
 
-    body {
-      background-color: #f1f5f9;
-      padding: 40px 20px;
-    }
+        h2, h3 {
+            color: #333;
+        }
 
-    h2, h3 {
-      text-align: center;
-      color: #1e293b;
-      margin-bottom: 30px;
-      font-size: 28px;
-    }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
 
-    .container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 40px;
-      max-width: 1200px;
-      margin: auto;
-    }
+        th, td {
+            border: 1px solid #444;
+            padding: 6px;
+            text-align: left;
+        }
 
-    .form-container {
-      background-color: #fff;
-      padding: 30px;
-      border-radius: 16px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-      width: 100%;
-      max-width: 320px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
+        th {
+            background-color: #f2f2f2;
+        }
 
-    .form-container label {
-      font-weight: 600;
-      color: #1e293b;
-    }
+        .info-block {
+            background-color: #f9f9f9;
+            padding: 10px;
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+        }
 
-    .form-container input,
-    .form-container select {
-      padding: 12px;
-      border: 1px solid #cbd5e1;
-      border-radius: 8px;
-      background-color: #f8fafc;
-      transition: border-color 0.3s;
-    }
+        .resumo {
+            margin-top: 10px;
+            font-weight: bold;
+        }
 
-    .form-container input:focus,
-    .form-container select:focus {
-      outline: none;
-      border-color: #3b82f6;
-      background-color: #fff;
-    }
-
-    .form-container button {
-      padding: 12px;
-      background-color: #3b82f6;
-      color: #fff;
-      font-weight: bold;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
-
-    .form-container button:hover {
-      background-color: #2563eb;
-    }
-
-    .results {
-      flex: 1;
-      background-color: #fff;
-      padding: 30px;
-      border-radius: 16px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-      overflow-x: auto;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 15px;
-    }
-
-    thead {
-      background-color: #e2e8f0;
-      color: #0f172a;
-    }
-
-    th, td {
-      text-align: left;
-      padding: 12px;
-      border-bottom: 1px solid #cbd5e1;
-    }
-
-    p {
-      font-size: 15px;
-      color: #334155;
-    }
-
-    @media (max-width: 768px) {
-      .container {
-        flex-direction: column;
-      }
-      
-    }
-    .pdf-button {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 20px;
-  background-color: #dc2626; /* vermelho suave */
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 15px;
-  cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  transition: background-color 0.3s, transform 0.2s;
-}
-
-.pdf-button:hover {
-  background-color:rgb(235, 88, 88);
-  transform: translateY(-1px);
-}
-
-  </style>
+        hr {
+            border: 0;
+            border-top: 1px solid #ccc;
+        }
+    </style>
 </head>
+<body>
+
+    <h2>Relatório CheckList</h2>
+    <h3>Dados da Auditoria:</h3>
+
+    <div class="info-block">
+        <?php
+            $sqlNumeroAuditoria = "
+                SELECT 
+                    pre.idpre,
+                    aud.nomeauditor,
+                    aud2.nomeauditor,
+                    aud3.nomeauditor,
+                    ger.nomegerente,
+                    emp.nomeempresa,
+                    pre.dtinicial
+                FROM pre_nconformidade pre
+                INNER JOIN auditor aud ON aud.idauditor = pre.id_auditorpri
+                LEFT JOIN auditor aud2 ON aud2.idauditor = pre.id_auditorsec
+                LEFT JOIN auditor aud3 ON aud3.idauditor = pre.id_auditorter
+                INNER JOIN empresagerente empger ON empger.idempger = pre.idempgr
+                INNER JOIN empresa emp ON emp.idempresa = empger.id_empresa
+                INNER JOIN gerente ger ON ger.idgerente = empger.id_gerente
+                WHERE pre.pendente = 'n' AND pre.audativa = 's' AND pre.idpre = :idpre
+            ";
+
+            $listarCabecalho = $conect->prepare($sqlNumeroAuditoria);
+            $listarCabecalho->bindParam(':idpre', $_POST['numerodaauditoria']);
+            $listarCabecalho->execute();
+            $captarAuditoria = $listarCabecalho->fetch();
+
+            echo 'Número da Auditoria: ' . $captarAuditoria[0] . '<br>';
+            echo 'Auditor 1: ' . $captarAuditoria[1] . ' | ';
+            echo 'Auditor 2: ' . $captarAuditoria[2] . ' | ';
+            echo 'Auditor 3: ' . $captarAuditoria[3] . '<br>';
+            echo 'Gerente: ' . $captarAuditoria[4] . ' | ';
+            echo 'Filial: ' . $captarAuditoria[5];
+        ?>
+    </div>
+
+    <?php
+        $sqlNotaAuditoria = "
+            SELECT SUM(inc.valor) 
+            FROM inconf inc
+            INNER JOIN pos_cadastroconf pos ON pos.nomeconf = inc.conc
+            INNER JOIN pre_nconformidade pre ON pre.idplano = pos.idplano
+            WHERE pos.vlrcobrado = 's' AND pos.ncativo = 's'
+            AND pre.idpre = :idpre
+        ";
+        $notaAuditoria = $conect->prepare($sqlNotaAuditoria);
+        $notaAuditoria->bindParam(':idpre', $_POST['numerodaauditoria']);
+        $notaAuditoria->execute();
+        $captiarNota = $notaAuditoria->fetch();
+
+        $notaFinal = notamaxima - floatval($captiarNota[0]);
+
+        echo '<div class="resumo">';
+        echo 'Nota Inicial: ' . number_format(notamaxima, 2, ',', '.') . ' | ';
+        echo 'Nota Auditoria: ' . number_format($captiarNota[0], 2, ',', '.') . ' | ';
+        echo 'Resultado Final: ' . number_format($notaFinal, 2, ',', '.');
+        echo '</div>';
+    ?>
+
+    <h3>Não conformidades com observações</h3>
+    <hr>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Ref</th>
+                <th>Descrição</th>
+                <th>Valor</th>
+                <th>Observação</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+                $sqlDescontos = "
+                    SELECT 
+                        inc.ref,
+                        inc.nomeincof,
+                        inc.valor,
+                        pos.observacao
+                    FROM inconf inc
+                    LEFT JOIN pos_cadastroconf pos ON pos.nomeconf = inc.conc
+                    INNER JOIN pre_nconformidade pre ON pre.idpre = pos.idplano
+                    WHERE pos.ncativo = 's' AND pos.vlrcobrado = 's' AND pre.idpre = :idpre
+                ";
+                $sqlDes = $conect->prepare($sqlDescontos);
+                $sqlDes->bindParam(':idpre', $_POST['numerodaauditoria']);
+                $sqlDes->execute();
+                $captarDescontos = $sqlDes->fetchAll();
+
+                foreach ($captarDescontos as $row) {
+                    echo '<tr>';
+                    echo '<td>' . htmlspecialchars($row[0]) . '</td>';
+                    echo '<td>' . htmlspecialchars($row[1]) . '</td>';
+                    echo '<td>' . number_format($row[2], 2, ',', '.') . '</td>';
+                    echo '<td>' . htmlspecialchars($row[3]) . '</td>';
+                    echo '</tr>';
+                }
+            ?>
+        </tbody>
+    </table>
+    <br><br>
+    <h3>Não conformidades (Sem Observações)</h3>
+    <hr>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Ref</th>
+                <th>Descrição</th>
+                <th>Valor</th>
+                <th>Observação</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+                $sqlDescontos = "
+                    SELECT 
+                        inc.ref,
+                        inc.nomeincof,
+                        inc.valor,
+                        pos.observacao
+                    FROM inconf inc
+                    LEFT JOIN pos_cadastroconf pos ON pos.nomeconf = inc.conc
+                    INNER JOIN pre_nconformidade pre ON pre.idpre = pos.idplano
+                    WHERE pos.ncativo = 's' AND pos.vlrcobrado = 'n' AND pre.idpre = :idpre
+                ";
+                $sqlDes = $conect->prepare($sqlDescontos);
+                $sqlDes->bindParam(':idpre', $_POST['numerodaauditoria']);
+                $sqlDes->execute();
+                $captarDescontos = $sqlDes->fetchAll();
+
+                foreach ($captarDescontos as $row) {
+                    echo '<tr>';
+                    echo '<td>' . htmlspecialchars($row[0]) . '</td>';
+                    echo '<td>' . htmlspecialchars($row[1]) . '</td>';
+                    echo '<td>' . number_format($row[2], 2, ',', '.') . '</td>';
+                    echo '<td>' . htmlspecialchars($row[3]) . '</td>';
+                    echo '</tr>';
+                }
+            ?>
+        </tbody>
+    </table>
+
+    <br><br><hr>
+    <p><strong>Orientação:</strong> Favor, senhor(a) gerente, leia atentamente o conteúdo deste relatório antes de assinar. A sua assinatura indica ciência e concordância com as informações aqui apresentadas.</p>
+
+    <br><br><br>
+    <table style="width:100%; margin-top:40px; text-align:center; border: none;">
+        <tr>
+            <td style="width: 50%;">
+                _________________________________________<br>
+                <?php echo htmlspecialchars($captarAuditoria[4]); ?><br>
+                <strong>Gerente Responsável</strong>
+            </td>
+            <td style="width: 50%;">
+                _________________________________________<br>
+                <?php echo htmlspecialchars($captarAuditoria[1]); ?><br>
+                <strong>Auditor 1</strong>
+            </td>
+        </tr>
+    </table>
+
+</body>
+</html>
 <?php
-    
-    
-  $dataAuditoria = $_POST['dtauditoria'];
-  $nomeEmpresa = $_POST['nomeempresa'];
-  $nomeGerente = $_POST['gerente'];  
-  $valorFixo = 's';
-    echo '<h3>SOLAR MÓVEIS E ELETROS</h3>';   
-    echo '<h2>Relatório de Auditoria:</h2>';
-  echo '<p><strong>Loja:</strong> ' . htmlspecialchars($nomeEmpresa) . ' &nbsp; 
-  | &nbsp; <strong>Gerente:</strong> ' . htmlspecialchars($nomeGerente) . ' &nbsp; | 
-  &nbsp; <strong>Diretor Auditor:</strong> Alexandre Cordeiro</p><br>';
-   $sqlconsultaNota = "
-    select sum(inc.valor)
-    from inconf inc
-    inner join pos_cadastroconf pos on pos.nomeconf = inc.conc
-    inner join pre_nconformidade pre on pre.idplano = pos.idplano
-    inner join empresagerente empg on empg.idempger = pre.idempgr
-    inner join empresa emp on emp.idempresa = empg.id_empresa
-    inner join gerente ger on ger.idgerente = empg.id_gerente
-    where pre.dtinicial = :date
-    and ger.nomegerente = :ger and emp.nomeempresa = :emp
-    and pos.vlrcobrado = :valor
-    and pos.ncativo = :valor
-    and pos.ncativo = 's'
-    order by inc.idiconf
-  ";
-  $sqlNota = $conect->prepare($sqlconsultaNota);
-  $sqlNota->bindParam(':date', $dataAuditoria);
-  $sqlNota->bindParam(':ger', $nomeGerente);
-  $sqlNota->bindParam(':emp', $nomeEmpresa);
-  $sqlNota->bindParam(':valor', $valorFixo );
-  $sqlNota->execute();
-  $captarNota = $sqlNota->fetchColumn();
-  $notaFinal = notaMaxima - floatval($captarNota);
-   
-  echo "<p><strong>Nota Inicial:</strong> 10.00</p>";
-  echo "<p><strong>Nota Não Conformidades:</strong> " . number_format($captarNota, 2, ',', '.') . "</p>";
-  echo "<p><strong>Nota Final:</strong> " . number_format($notaFinal, 2, ',', '.') . "</p><br>";
+$html = ob_get_clean();
+$pdf->loadHtml($html);
+$pdf->setPaper('A4');
+$pdf->render();
+$pdf->stream($captarAuditoria[6].$captarAuditoria[5].'.pdf',['Attachment'=>false]);
 
-  //consuta não conformidades com descontos
-  $sqlBusca = 
-  "
-     select
-    inc.ref,
-    inc.nomeincof,
-    inc.valor
-    from pos_cadastroconf pos
-    inner join pre_nconformidade pre on pre.idpre = pos.idplano
-    inner join empresagerente empre on empre.idempger = pre.idempgr
-    inner join empresa emp on emp.idempresa = empre.id_empresa
-    inner join gerente g on g.idgerente = empre.id_gerente
-    inner join inconf inc on inc.conc = pos.nomeconf
-    where pre.dtinicial = :date
-    and emp.nomeempresa = :emp
-    and g.nomegerente = :ger
-    and pos.ncativo = 's' and vlrcobrado = 's'
-  ";
-  $listarBuscaDesconto = $conect->prepare($sqlBusca);
-  $listarBuscaDesconto->bindParam(':date', $dataAuditoria);
-  $listarBuscaDesconto->bindParam(':emp', $nomeEmpresa);
-  $listarBuscaDesconto->bindParam(':ger', $nomeGerente);
-  $listarBuscaDesconto->execute();
-
-  if ($listarBuscaDesconto->rowCount() > 0) {
-    
-    echo '
-      <h5>NÃO CONFORMIDADES COM DESCONTOS</h5>
-      <table>
-        <thead>
-          <tr>
-            <th>Ref</th>
-            <th>Descrição</th>
-            <th>Nota</th>
-          </tr>
-        </thead>
-        <tbody>
-    ';
-    foreach ($listarBuscaDesconto as $resultado) {
-      echo '
-        <tr>
-          <td>' . htmlspecialchars($resultado['ref']) . '</td>
-          <td>' . htmlspecialchars($resultado['nomeincof']) . '</td>
-          <td>' . htmlspecialchars($resultado['valor']) . '</td>
-        </tr>
-      ';
-    }
-    echo '</tbody></table>';
-  } else {
-    echo '<p style="color: #dc2626;">Nenhum resultado encontrado para os filtros informados.</p>';
-  }
-
-  // conultas não conformidades sem descontos
-  $sqlBuscaSemDesconto = 
-  "
-     select
-     inc.ref,
-    inc.nomeincof
-    from pos_cadastroconf pos
-    inner join pre_nconformidade pre on pre.idpre = pos.idplano
-    inner join empresagerente empre on empre.idempger = pre.idempgr
-    inner join empresa emp on emp.idempresa = empre.id_empresa
-    inner join gerente g on g.idgerente = empre.id_gerente
-    inner join inconf inc on inc.conc = pos.nomeconf
-    where pre.dtinicial = :date
-    and emp.nomeempresa = :emp
-    and g.nomegerente = :ger
-    and pos.ncativo = 's' and vlrcobrado = 'n'
-    
-  ";
-  $listarBuscaSemDesconto = $conect->prepare($sqlBuscaSemDesconto);
-  $listarBuscaSemDesconto->bindParam(':date', $dataAuditoria);
-  $listarBuscaSemDesconto->bindParam(':emp', $nomeEmpresa);
-  $listarBuscaSemDesconto->bindParam(':ger', $nomeGerente);
-  $listarBuscaSemDesconto->execute();
-
-  if ($listarBuscaSemDesconto->rowCount() > 0) {
-    echo '
-      <br><br>
-      <h5>NÃO CONFORMIDADES (SEM OBSERVAÇÕES)</h5>
-      <table>
-        <thead>
-          <tr>
-            <th>Ref</th>
-            <th>Descrição</th>
-            <th>Nota</th>
-          </tr>
-        </thead>
-        <tbody>
-    ';
-    foreach ($listarBuscaSemDesconto as $resultadoSemDesconto) {
-      echo '
-        <tr>
-          <td>' . htmlspecialchars($resultadoSemDesconto['ref']) . '</td>
-          <td>' . htmlspecialchars($resultadoSemDesconto['nomeincof']) . '</td>
-          <td>--</td>
-          
-        </tr>
-      ';
-    }
-    echo '</tbody></table>';
-    
-  }
-  echo '
-  <br><br>
-  <div style="border: 1px solid #dc2626; padding: 15px; margin-top: 30px;">
-    <p style="color: #dc2626; font-weight: bold; font-size: 16px;">Atenção:</p>
-    <p style="font-size: 14px;">
-      Antes de assinar este relatório, confira cuidadosamente todas as informações acima, incluindo os dados da loja, gerente responsável, auditor e as não conformidades listadas.
-      <br><br>
-      Ao assinar, você confirma a veracidade dos dados apresentados e se compromete com os planos de ação, se aplicável.
-    </p>
-  </div>
-
-  <br><br><br><br>
-
-  <table style="width: 100%; border: none;">
-    <tr>
-      <td style="text-align: center;">
-        ___________________________________________<br>
-        <strong>' . htmlspecialchars($nomeGerente) . '</strong><br>
-        Gerente Responsável
-      </td>
-      <td style="text-align: center;">
-        ___________________________________________<br>
-        <strong>Auditor Respónsavel</strong><br>
-        Auditor Responsável
-      </td>
-    </tr>
-  </table>
-';
-
-
-  $html = ob_get_clean();
-  $domPdf->loadHtml($html);
-  $domPdf->setPaper('A4', 'portrait');
-  $domPdf->render();
-  $domPdf->stream($dataAuditoria.'_'.$nomeEmpresa.'.pdf', ['Attachment' => false]);
-  
+?>

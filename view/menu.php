@@ -128,7 +128,7 @@
     <h1 class="menu-title">Bem-vindo ao AudCheck</h1>
 
     <div class="list-group">
-      <a href="menuEventos.html" class="list-group-item list-group-item-action">
+      <a href="menuEventos.php" class="list-group-item list-group-item-action">
         <i class="fas fa-calendar-alt"></i> Eventos
       </a>
         <a href="cadastros.html" class="list-group-item list-group-item-action">
