@@ -1,32 +1,129 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lançamento de Divergências</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lançamento de Divergências</title>
+  <style>
+    :root {
+      --laranja-claro: #FFD180; /* Laranja bem claro */
+      --laranja-hover: #FFB74D;
+      --verde: #4CAF50;
+      --verde-hover: #45A049;
+      --cinza-borda: #ccc;
+      --fundo-input: #fffaf3;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #fffdf9;
+      color: #333;
+      margin: 40px;
+      line-height: 1.6;
+    }
+
+    h2, h3 {
+      color: #FF8F00;
+    }
+
+    form {
+      margin-bottom: 30px;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      max-width: 500px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    input, textarea {
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid var(--cinza-borda);
+      background-color: var(--fundo-input);
+      width: 100%;
+      box-sizing: border-box;
+      margin-bottom: 15px;
+      transition: border 0.2s ease;
+    }
+
+    input:focus, textarea:focus {
+      border-color: #FFB74D;
+      outline: none;
+    }
+
+    button {
+      background-color: var(--verde);
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: var(--verde-hover);
+    }
+
+    a {
+      display: inline-block;
+      background-color: var(--laranja-claro);
+      color: #333;
+      padding: 10px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s ease;
+      margin-top: 20px;
+    }
+
+    a:hover {
+      background-color: var(--laranja-hover);
+    }
+
+    p {
+      font-size: 1rem;
+      color: #555;
+    }
+  </style>
 </head>
 <body>
-    <h2>Área de divergências</h2>
-    <form  method="get">
-        <label for="numerodaauditoria">Número da Auditoria:</label>
-        <input type="number" name="numerodaauditoria" id="numerodaauditoria">
-        <button type="submit">Buscar</button>
-    </form>
-    <p>Dados da Auditoria:</p> <br><br>
-    <h3>Inserir Divergências:</h3> <br>
-    <form action="#" method="post">
-        <label for="codigoproduto">Código Produto</label>
-        <input type="number" name="codigoproduto" id="codigoproduto" placeholder="Inisira o número do produto", required>
-        <br><br>
-        <label for="produto">Produto:</label>
-        <input type="text" name="produto" id="produto" placeholder="Nome do Produto" required>
-        <br><br>
-        <label for="valor">Valor:</label>
-        <input type="number" name="valor" id="valor" placeholder="Valor do Item" required>
+  <h2>Área de Divergências</h2>
 
+  <form method="get">
+    <label for="numerodaauditoria">Número da Auditoria:</label>
+    <input type="number" name="numerodaauditoria" id="numerodaauditoria" placeholder="Digite o número da auditoria">
+    <button type="submit">Buscar</button>
+  </form>
 
+  <p><strong>Dados da Auditoria:</strong></p>
 
-    </form>
-    
+  <h3>Inserir Divergências:</h3>
+  <form action="#" method="post">
+    <label for="codigoproduto">Código do Produto:</label>
+    <input type="number" name="codigoproduto" id="codigoproduto" placeholder="Insira o número do produto" required>
+
+    <label for="produto">Produto:</label>
+    <input type="text" name="produto" id="produto" placeholder="Nome do Produto" required>
+
+    <label for="valor">Valor:</label>
+    <input type="number" name="valor" id="valor" placeholder="Valor do Item" required>
+
+    <label for="observacao">Observação:</label>
+    <textarea name="observacao" id="observacao" rows="4" placeholder="Observações"></textarea>
+
+    <button type="submit">Salvar</button>
+  </form>
+
+  <a href="#">Voltar ao Menu</a>
 </body>
 </html>
