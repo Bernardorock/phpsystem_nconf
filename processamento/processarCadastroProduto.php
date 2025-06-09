@@ -9,7 +9,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $produto->InserirProduto
     (
         $_POST['referp'],
-        $_POST['descricaoproduto'],
+       strtoupper($_POST['descricaoproduto']),
         $_POST['ean'],
         $_POST['tipovolume']
     
