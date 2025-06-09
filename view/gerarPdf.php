@@ -2,9 +2,10 @@
 require __DIR__ . '/../vendor/autoload.php';
 include '../conect.php';
 use Dompdf\Dompdf;
-define('notamaxima', 10.00);
 $pdf = new Dompdf();
 ob_start();
+
+define('notamaxima', 10.00);
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -35,7 +36,7 @@ ob_start();
         }
 
         th {
-            background-color: #f2f2f2;
+            background-color:rgb(235, 168, 45);
         }
 
         .info-block {
@@ -57,6 +58,9 @@ ob_start();
     </style>
 </head>
 <body>
+    <img src="/../imagens/solarmoveiseeletros.jpeg">
+    <br>
+    
 
     <h2>Relatório CheckList</h2>
     <h3>Dados da Auditoria:</h3>
@@ -71,7 +75,8 @@ ob_start();
                     aud3.nomeauditor,
                     ger.nomegerente,
                     emp.nomeempresa,
-                    pre.dtinicial
+                    pre.dtinicial,
+                    pre.dtfinal
                 FROM pre_nconformidade pre
                 INNER JOIN auditor aud ON aud.idauditor = pre.id_auditorpri
                 LEFT JOIN auditor aud2 ON aud2.idauditor = pre.id_auditorsec
@@ -87,12 +92,14 @@ ob_start();
             $listarCabecalho->execute();
             $captarAuditoria = $listarCabecalho->fetch();
 
-            echo 'Número da Auditoria: ' . $captarAuditoria[0] . '<br>';
+            echo 'Número da Auditoria: ' . $captarAuditoria[0] . ' - '. "Diretor: Alexandre Cordeiro".'<br>';
             echo 'Auditor 1: ' . $captarAuditoria[1] . ' | ';
             echo 'Auditor 2: ' . $captarAuditoria[2] . ' | ';
             echo 'Auditor 3: ' . $captarAuditoria[3] . '<br>';
             echo 'Gerente: ' . $captarAuditoria[4] . ' | ';
-            echo 'Filial: ' . $captarAuditoria[5];
+            echo 'Filial: ' . $captarAuditoria[5] . ' | ';
+            echo 'Data Inicial: ' . $captarAuditoria[6] . ' | ';
+            echo 'Data Final: ' . $captarAuditoria[7];
         ?>
     </div>
 
@@ -114,54 +121,62 @@ ob_start();
 
         echo '<div class="resumo">';
         echo 'Nota Inicial: ' . number_format(notamaxima, 2, ',', '.') . ' | ';
-        echo 'Nota Auditoria: ' . number_format($captiarNota[0], 2, ',', '.') . ' | ';
+        echo 'Dedução Auditoria: ' . number_format($captiarNota[0], 2, ',', '.') . ' | ';
         echo 'Resultado Final: ' . number_format($notaFinal, 2, ',', '.');
         echo '</div>';
     ?>
-
-    <h3>Não conformidades com observações</h3>
-    <hr>
-
-    <table>
+    <h3>Conformidades:</h3>
+     
+     <table>
         <thead>
             <tr>
                 <th>Ref</th>
                 <th>Descrição</th>
                 <th>Valor</th>
-                <th>Observação</th>
             </tr>
         </thead>
         <tbody>
             <?php
-                $sqlDescontos = "
-                    SELECT 
-                        inc.ref,
-                        inc.nomeincof,
-                        inc.valor,
-                        pos.observacao
-                    FROM inconf inc
-                    LEFT JOIN pos_cadastroconf pos ON pos.nomeconf = inc.conc
-                    INNER JOIN pre_nconformidade pre ON pre.idpre = pos.idplano
-                    WHERE pos.ncativo = 's' AND pos.vlrcobrado = 's' AND pre.idpre = :idpre
+                $sqlPontos = 
+                
+                "
+                    select 
+                    nconf.ref,
+                    nconf.nomeincof,
+                    nconf.valor
+                    from inconf nconf 
+                    where nconf.nomeincof not in
+                    (select 
+                    inc.nomeincof
+                    /*pos.observacao*/
+                    from inconf inc
+                    left join pos_cadastroconf pos on pos.nomeconf = inc.conc
+                    inner join pre_nconformidade pre on pre.idpre = pos.idplano
+                    where pre.idpre = :idpre)
+                  
                 ";
-                $sqlDes = $conect->prepare($sqlDescontos);
-                $sqlDes->bindParam(':idpre', $_POST['numerodaauditoria']);
-                $sqlDes->execute();
-                $captarDescontos = $sqlDes->fetchAll();
+                $sqlGanhos = $conect->prepare($sqlPontos);
+                $sqlGanhos->bindParam(':idpre', $_POST['numerodaauditoria']);
+                $sqlGanhos->execute();
+                $captarGanhos = $sqlGanhos->fetchAll();
 
-                foreach ($captarDescontos as $row) {
+                foreach ($captarGanhos as $row) {
                     echo '<tr>';
                     echo '<td>' . htmlspecialchars($row[0]) . '</td>';
                     echo '<td>' . htmlspecialchars($row[1]) . '</td>';
                     echo '<td>' . number_format($row[2], 2, ',', '.') . '</td>';
-                    echo '<td>' . htmlspecialchars($row[3]) . '</td>';
+                   // echo '<td>' . htmlspecialchars($row[3]) . '</td>';
                     echo '</tr>';
                 }
             ?>
         </tbody>
     </table>
     <br><br>
-    <h3>Não conformidades (Sem Observações)</h3>
+    
+<hr>
+
+   
+    <h3>Não conformidades Justificadas:</h3>
     <hr>
 
     <table>
@@ -204,6 +219,50 @@ ob_start();
     </table>
 
     <br><br><hr>
+
+                 <h3>Não conformidades não justificadas:</h3>
+    <hr>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Ref</th>
+                <th>Descrição</th>
+                <th>Valor</th>
+                <th>Observação</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+                $sqlDescontos = "
+                    SELECT 
+                        inc.ref,
+                        inc.nomeincof,
+                        inc.valor,
+                        pos.observacao
+                    FROM inconf inc
+                    LEFT JOIN pos_cadastroconf pos ON pos.nomeconf = inc.conc
+                    INNER JOIN pre_nconformidade pre ON pre.idpre = pos.idplano
+                    WHERE pos.ncativo = 's' AND pos.vlrcobrado = 's' AND pre.idpre = :idpre
+                ";
+                $sqlDes = $conect->prepare($sqlDescontos);
+                $sqlDes->bindParam(':idpre', $_POST['numerodaauditoria']);
+                $sqlDes->execute();
+                $captarDescontos = $sqlDes->fetchAll();
+
+                foreach ($captarDescontos as $row) {
+                    echo '<tr>';
+                    echo '<td>' . htmlspecialchars($row[0]) . '</td>';
+                    echo '<td>' . htmlspecialchars($row[1]) . '</td>';
+                    echo '<td>' . number_format($row[2], 2, ',', '.') . '</td>';
+                    echo '<td>' . htmlspecialchars($row[3]) . '</td>';
+                    echo '</tr>';
+                }
+            ?>
+        </tbody>
+    </table>
+    <br><br>
+
     <p><strong>Orientação:</strong> Favor, senhor(a) gerente, leia atentamente o conteúdo deste relatório antes de assinar. A sua assinatura indica ciência e concordância com as informações aqui apresentadas.</p>
 
     <br><br><br>
@@ -217,7 +276,7 @@ ob_start();
             <td style="width: 50%;">
                 _________________________________________<br>
                 <?php echo htmlspecialchars($captarAuditoria[1]); ?><br>
-                <strong>Auditor 1</strong>
+                <strong>Auditor Responsável</strong>
             </td>
         </tr>
     </table>
