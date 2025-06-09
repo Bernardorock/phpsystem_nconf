@@ -16,6 +16,6 @@
         echo '<ul>';
         echo '<li>'.$valorLista[0]. ' . '.$valorLista[1].'</li>';
         echo '</ul>';
-        echo '<br>';
+        
     }
 ?>
