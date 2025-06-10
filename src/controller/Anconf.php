@@ -33,13 +33,14 @@ class Anconf
     {   
        
             $listarValores = $this->conectarClasse->prepare('
-                select nomeconf, vlrcobrado from an_cadastrarinconf where idpre = :idpre
+                select nomeconf, observacao from an_cadastrarinconf where idpre = :idpre
 
             ');
             $listarValores->bindParam(':idpre', $idpre);
             $listarValores->execute();
             foreach($listarValores as $valor){
-                echo $valor[0] . " // " . $valor[1];
+                echo $valor[0] . " // ".'<strong>'."OBS: " .'</strong>'. $valor[1];
+                echo '<hr>';
                 echo '<br>';
             }
                 
