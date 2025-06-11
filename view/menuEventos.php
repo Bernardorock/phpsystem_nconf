@@ -132,6 +132,12 @@
         <a href="lancarNaoConformidades.php" class="list-group-item list-group-item-action">
           <i class="fa-regular fa-bell"></i> Lançamentos de Auditorias
         </a>
+        <a href="" class="list-group-item list-group-item-action">
+          <i class="fa fa-file-text" aria-hidden="true"></i> Imobilizados
+        </a>
+        <a href="" class="list-group-item list-group-item-action">
+          <i class="fa fa-file-text" aria-hidden="true"></i> Avarias/Assistências
+        </a>
         <a href="lancamentoDivergencia.html" class="list-group-item list-group-item-action">
           <i class="fa fa-file-text" aria-hidden="true"></i> Lançamentos de Divergências
         </a>
