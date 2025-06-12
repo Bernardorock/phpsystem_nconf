@@ -1,3 +1,12 @@
+<?php
+     session_start();
+     include '../conect.php';
+     if(!isset($_SESSION['usuario']))
+     {
+       header('Location: telaLogin.html');
+       exit();
+     }  
+     ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -54,7 +63,6 @@
         
         <h3 class="mb-3"><i class="bi bi-pencil-square"></i>Lançamento Não Conformidades</h3>
         <?php 
-            session_start();
             echo '<i class="bi bi-person-circle"></i> Usuário: ' . htmlspecialchars($_SESSION['usuario']);
             ?>
             <br>
@@ -82,8 +90,6 @@
                 <select name="auditorprimario" required>
                     <option></option>
                     <?php
-                        session_start();
-                        include '../conect.php';
                         $ListarAuditor = $conect->prepare('select nomeauditor from auditor');
                         $ListarAuditor->execute();
                         foreach($ListarAuditor as $listarAuditorPrimario)
@@ -114,8 +120,7 @@
                 <select name="auditorternario">
                     <option></option>
                     <?php
-                        session_start();
-                        include '../conect.php';
+
                         $ListarAuditorTerceiro = $conect->prepare('select nomeauditor from auditor');
                         $ListarAuditorTerceiro->execute();
                         foreach($ListarAuditorTerceiro as $listarAuditorTerceiro)
@@ -131,8 +136,6 @@
                 <select name="gerente" required>
                     <option></option>
                     <?php
-                        session_start();
-                        include '../conect.php';
                         $ListarGerente = $conect->prepare('select nomegerente from gerente');
                         $ListarGerente->execute();
                         foreach($ListarGerente as $listarValorGernte)
@@ -145,8 +148,6 @@
                 <select name="nomeempresa" required>
                     <option></option>
                     <?php
-                        session_start();
-                        include '../conect.php';
                         $ListarEmpresa = $conect->prepare('select nomeempresa from empresa');
                         $ListarEmpresa->execute();
                         foreach($ListarEmpresa as $listarValorEmpresa)

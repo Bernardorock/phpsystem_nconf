@@ -1,3 +1,12 @@
+ <?php
+     session_start();
+     if(!isset($_SESSION['usuario']))
+     {
+       header('Location: telaLogin.html');
+       exit();
+     }   
+        
+      ?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -112,17 +121,14 @@
 <body>
 
   <div class="menu-container">
-
+    <?=  'Usuário: ' . $_SESSION['usuario'] ?? '';?>
     <!-- LOGO (se quiser usar imagem real, troque o conteúdo abaixo) -->
     <div class="logo">
       <i class="fas fa-solar-panel fa-3x" style="color: #ff8c00;"></i>
     </div>
 
     <div class="user-info">
-      <?php
-        session_start();
-        echo 'Usuário: ' . $_SESSION['usuario'];
-      ?>
+     
     </div>
 
     <h1 class="menu-title">Menu Eventos</h1>

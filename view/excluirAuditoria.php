@@ -91,7 +91,7 @@
     <a href='menu.php'>⮌ Voltar ao Menu</a>
 
     <h3>Favor, insira o número da auditoria</h3>
-    <form method="POST" action="/../processamento/processarInativarPre.php">
+    <form method="POST" action="/../processamento/processarInativarPre.php" onsubmit="return confirmarExclusao() ">
         <label for="numeroauditoria">Número da auditoria:</label>
         <input type="number" name="numerodaauditoria" id="numeroauditoria" required value="<?= htmlspecialchars($_SESSION['idpre'] ?? '') ?>" disabled>
         <button type="submit">Excluir</button>
@@ -137,4 +137,11 @@
         </tbody>
     </table>
 </body>
+    <script>
+        function confirmarExclusao()
+        {
+            return confirm('Deseja remover essa auditoria? Evento não pode ser desfeito');
+        }
+    </script>
+
 </html>
