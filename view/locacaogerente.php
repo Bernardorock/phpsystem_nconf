@@ -143,7 +143,7 @@
     <form action="../processamento/processarAlocarGerente.php" method="POST" enctype="multipart/form-data">
       <div class="input-field">
         <label for="nome">Nome Gerente</label>
-    <select name="nomegerente" id="nomegerente">
+    <select name="nomegerente" id="nomegerente" required>
         <option></option>
         <?php
             session_start();
@@ -157,7 +157,7 @@
         ?>
     </select>
     <label>Nome Empresa</label><br>
-        <select name="nomeempresa" id="nomeempresa">
+        <select name="nomeempresa" id="nomeempresa" required>
           <option></option>
         <?php
             include '../conect.php';

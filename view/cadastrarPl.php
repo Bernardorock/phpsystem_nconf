@@ -80,7 +80,7 @@
     <caption>Relatório Envio e Recebimento PA</caption>
     <thead>
         <tr>
-            <th>ID Evento</th>
+            <th>Número Auditoria</th>
             <th>Início</th>
             <th>Fim</th>
             <th>Auditor</th>

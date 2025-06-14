@@ -151,7 +151,7 @@
          <button type="button" class="btn btn-outline-primary">Menu</button>
     </a>
     <a href="lancarNaoConformidades.php">
-        <button type="button" class="btn btn-outline-primary">Ñ.Conformes</button>
+        <button type="button" class="btn btn-outline-primary">Lançamentos</button>
     </a> 
     <a href="alterarLancamentoPre.php">
         <button type="button" class="btn btn-outline-primary">Alterar</button>

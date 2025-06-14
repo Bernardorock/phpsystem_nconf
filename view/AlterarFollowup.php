@@ -88,6 +88,7 @@
                     <th>ID</th>
                     <th>Recebimento PA</th>
                     <th>Empresa</th>
+                    <th>Ativo</th>
                 </tr>
             </thead>
             <tbody>
@@ -97,11 +98,12 @@
                         '
                         select idfolloup as idevento, 
                         p.dtrecebidopl as dtrecebidopl, 
-                        emp.nomeempresa  as empresa
+                        emp.nomeempresa  as empresa,
+                        f.ativo
                         from followup f
                         inner join planodeacao p on p.idplano = f.id_planodeacao
                         inner join empresa emp on emp.idempresa = p.id_empresa
-                        where p.dtrecebidopl is not null and dtrecebimentofl is null 
+                        where p.dtrecebidopl is not null and dtrecebimentofl is null and ativo ="s"
                         '
                     );
                     foreach($listar as $valorLista) {
@@ -109,6 +111,7 @@
                                 <td>{$valorLista['idevento']}</td>
                                 <td>{$valorLista['dtrecebidopl']}</td>
                                 <td>{$valorLista['empresa']}</td>
+                                <td>{$valorLista['ativo']}</td>
                               </tr>";
                     }
                 ?>

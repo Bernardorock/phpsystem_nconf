@@ -3,7 +3,7 @@
      include '../conect.php';
      if(!isset($_SESSION['usuario']))
      {
-       header('Location: telaLogin.html');
+       header('Location: /../telaLogin.html');
        exit();
      }  
      ?>
@@ -61,7 +61,7 @@
 <body>
     <div class="container">
         
-        <h3 class="mb-3"><i class="bi bi-pencil-square"></i>Lançamento Não Conformidades</h3>
+        <h3 class="mb-3"><i class="bi bi-pencil-square"></i>Lançamento de Auditoria</h3>
         <?php 
             echo '<i class="bi bi-person-circle"></i> Usuário: ' . htmlspecialchars($_SESSION['usuario']);
             ?>
@@ -70,11 +70,11 @@
                 <button type="button" class="btn btn-outline-primary">Menu</button>
             </a>
             <a  href="cadastrarSubInconf.php">
-                <button type="button" class="btn btn-outline-primary">Ñ.Conformes</button>
+                <button type="button" class="btn btn-outline-primary">Ocorrências</button>
             </a>
              
             <br><br>
-             <form action="../processamento/processarPlanoInconf.php" method="POST" class="form-container row g-3 align-items-end">
+             <form action="../processamento/processarPlanoInconf.php" method="POST" class="form-container row g-3 align-items-end" onsubmit="return criarAuditoria()">
             <h3>Cadastrar Auditoria:</h3>
     
             <div class="col-md-3">
@@ -170,4 +170,10 @@
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+<script>
+    function criarAuditoria()
+    {
+       return confirm('Deseja criar auditoria?')
+    }
+</script>
 </html>

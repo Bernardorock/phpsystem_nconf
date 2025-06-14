@@ -14,11 +14,9 @@
     $nomeAudPri = $_POST['auditorprimario'];
     $nomeAudSec = $_POST['auditorsecundario'] ?? '';
     $nomeAudTerc = $_POST['auditorternario'] ?? '';
-    $pendetePre = 's';
-    $ativarAud = 's';
+    $valorConstante = 's';
     $dataEnvio = null;
     $dataRecebido = null;
-    $ncAtivo = 's';
 
 
     //chaves estrangeiras: usuario/
@@ -100,7 +98,7 @@ if($dataInicio > $dataFim){
                                             $dataFim,
                                             $dataEnvio,
                                             $dataRecebido,
-                                            $ncAtivo
+                                            $valorConstante
                                         );
         }
     
@@ -112,9 +110,10 @@ $captarChavePlano = $listarChavePlano->fetch();
 
 $inserirFollowp = $conect->prepare
 ('
-    insert into followup (id_planodeacao) values (:idplano)
+    insert into followup (id_planodeacao, ativo) values (:idplano, :ativo)
 ');
 $inserirFollowp->bindParam(':idplano', $captarChavePlano[0]);
+$inserirFollowp->bindParam(':ativo', $valorConstante);
 $inserirFollowp->execute();
 
 $inserirfPrenaoconformidades = new Prenaoconf();
@@ -124,11 +123,13 @@ $inserirfPrenaoconformidades->inserirPreNaoConf(
     $capturarChaveAudPri[0],
     $capturarChaveAudSec[0],
     $capturarChaveAudTerc[0],
-    $pendetePre,
+    $valorConstante,
     $captarChavePlano[0],
     $capturarIdLigacao[0],
-    $ativarAud
+    $valorConstante
 );
+header('Location: /../view/lancarNaoConformidades.php');
+exit();
 
 
 ?>

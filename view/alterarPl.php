@@ -87,7 +87,7 @@
             <caption>Eventos Cadastrados (Pendentes)</caption>
             <thead>
                 <tr>
-                    <th>ID</th>
+                    <th>Número Auditoria</th>
                     <th>Início</th>
                     <th>Fim</th>
                     <th>Auditor</th>

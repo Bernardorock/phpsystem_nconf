@@ -35,6 +35,7 @@ class Posconf
     // inserir na tabela pos_cadastroconf
 
     public function inserirPos($idplano, $nomeconf, $vlrcobrado, $observacao)
+        
     {   $ncAtivo = 's';
         $listar = $this->conectarClasse->prepare 
         (    'insert into pos_cadastroconf 

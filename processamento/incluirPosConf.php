@@ -10,7 +10,7 @@ $_POST['numerodaauditoria'] = $_SESSION['idpre'];
 // verificar se numero da auditoria está ativa ou existe
 
 $listar = $conect->prepare('select idpre from pre_nconformidade 
-where audativa = :audativa and idpre = :idpre');
+where audativa = :audativa and idpre = :idpre and pendente = "n"');
 $listar->bindParam(':idpre', $_POST['numerodaauditoria']);
 $listar->bindParam(':audativa', $audAtiva);
 $listar->execute();
@@ -18,7 +18,7 @@ $capturar = $listar->fetch();
 
 if(!isset($capturar[0]))
 {
-   echo 'AUDITORIA INEXISTENTE OU NÃO PENDENTE';
+   echo 'AUDITORIA INEXISTENTE OU PENDENTE DE LANÇAMENTOS';
 }else
 {
     $incluir->inserirPos

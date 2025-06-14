@@ -28,6 +28,18 @@ class Followup
         $updateFl->execute();
         echo 'Follow up Lançado com sucesso';
     }
+    public function desativarFl($idpre)
+    {
+        $sqlDesativar = 
+        "
+            update followup
+            set ativo = 'n'
+            where id_planodeacao = :idpre
+        ";
+        $desativar = $this->conectarClass->prepare($sqlDesativar);
+        $desativar->bindParam(':idpre', $idpre);
+        $desativar->execute();
+    }
 
 
 
