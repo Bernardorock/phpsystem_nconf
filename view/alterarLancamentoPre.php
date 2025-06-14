@@ -1,7 +1,7 @@
 <?php
     session_start();
     include '../conect.php';
-    echo 'Usuário: ' . $_SESSION['usuario'];
+    echo '<strong>'.' <i class="bi bi-person-circle"></i> Usuário: ' . $_SESSION['usuario'].'</strong>';
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -12,13 +12,13 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #fffaf0;
+            background-color: white;
             color: #333;
             margin: 20px;
         }
 
         h3 {
-            color: #FFA500;
+            color:black;
         }
 
         a {
@@ -63,20 +63,21 @@
             margin-right: 5px;
         }
 
-        button , a{
-            padding: 10px 15px;
-            background-color: #FFA500;
-            border: none;
-            border-radius: 5px;
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 10px;
-        }
+        button, a {
+    padding: 10px 15px;
+    background-color: #ffa500; /* mesma cor usada nas bordas e cabeçalho da tabela */
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+}
 
-        button:hover {
-            background-color: #e69500;
-        }
+button:hover {
+    background-color: #e69500;
+}
+
 
         table {
             width: 100%;
@@ -117,6 +118,8 @@
     }
 
     </style>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
 </head>
 <body>
     <h3>Área de alteração</h3>
@@ -132,7 +135,6 @@
     <table>
         <thead>
             <tr>
-                <th>Nº PL</th>
                 <th>Nº AUDITORIA</th>
                 <th>Dt Inicial</th>
                 <th>Dt Final</th>
@@ -148,7 +150,6 @@
                 $idPre = $_GET['idpre'] ?? '';
                 $listaPendenteNc = $conect->prepare("
                     SELECT 
-                        pl.idplano,
                         pre.idpre,
                         pre.dtinicial,
                         pre.dtfinal,
@@ -180,7 +181,6 @@
                             <td>{$row[5]}</td>
                             <td>{$row[6]}</td>
                             <td>{$row[7]}</td>
-                            <td>{$row[8]}</td>
                         </tr>";
                 }
             ?>

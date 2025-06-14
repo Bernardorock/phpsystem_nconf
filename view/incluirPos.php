@@ -1,6 +1,6 @@
 <?php
 session_start();
-echo 'Usuário: ' . $_SESSION['usuario'];
+echo '<strong>'.'Usuário: ' . $_SESSION['usuario'].'</strong>';
 include '../conect.php';
 ?>
 <!DOCTYPE html>
@@ -76,10 +76,31 @@ include '../conect.php';
         button:hover {
             background-color: #ffc04d;
         }
+        .botao-link {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 12px 20px;
+    background-color: #FFD580;
+    color: #333;
+    font-weight: bold;
+    text-decoration: none;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.botao-link:hover {
+    background-color: #ffc04d;
+}
+
     </style>
 </head>
 <body>
     <h2>Inclusão de Não Conformidades</h2>
+
+    <a href="menuEventos.php" class="botao-link">⮌ Voltar ao Menu</a>
+
 
     <form method="POST" action="/../processamento/incluirPosConf.php">
         <label for="numerodaauditoria">Número da Auditoria</label>
@@ -98,12 +119,14 @@ include '../conect.php';
 
         <label>Depende do Gerente?</label>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="cobrarnota" id="cobrarnotaSim" value="s">
             <label for="cobrarnotaSim">Sim</label>
+            <input class="form-check-input" type="radio" name="cobrarnota" id="cobrarnotaSim" value="s">
+            
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="cobrarnota" id="cobrarnotaNao" value="n">
             <label for="cobrarnotaNao">Não</label>
+            <input class="form-check-input" type="radio" name="cobrarnota" id="cobrarnotaNao" value="n">
+            
         </div>
 
         <label for="observacao">Observação:</label>
